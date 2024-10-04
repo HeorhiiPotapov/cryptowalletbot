@@ -30,12 +30,11 @@ async def enter_address(message: Message, state: FSMContext) -> None:
     info_msg = await message.answer('⌚ Looking for data...')
     response = parse_address(message.text)
     if response:
-        # await message.bot.send_message(message.from_user.id, text=response.get('main_data'))
         await message.bot.send_document(
             message.from_user.id,
             FSInputFile(response.get('filename'), response.get('filename')),
             caption=response.get('main_data')
         )
     else:
-        await message.answer('Error while retrieving information, please wait and try later')
+        await message.answer('Information about the address not available.')
     await state.clear()
