@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    container_name: crypto_wallet_bot
+    volumes:
+      - .:/app
+    environment:
+      - DISPLAY=:99
+    depends_on:
+      - chrome
+    networks:
+      - webnet
+
+  chrome:
+    image: seleniarm/standalone-chromium:latest
+    networks:
+      - webnet
+#    shm_size: 'gb'
+
+networks:
+  webnet:
+    driver: bridge
