@@ -33,12 +33,16 @@ def save_to_excel(data: list, filename: str) -> None:
 
 def parse_address(address: str) -> dict | None:
     # setup undetected-chromedriver
-    options = webdriver .ChromeOptions()
+    options = webdriver.ChromeOptions()
     # user_agent = UserAgent().random
     # options.add_argument(f'--user-agent={user_agent}')
     options.add_argument('--no-sandbox')
     # options.add_argument("--headless")
     options.add_argument('--disable-dev-shm-usage')
+    # options.add_argument("--proxy-server=")
+    options.add_argument(f"--proxy-pac-url=file://./proxy.pac")
+
+    options.add_argument("--load-extension=proxy_extension")
     # options.add_argument('--disable-blink-features=AutomationControlled')
 
     # Using undetected-chromedriver
@@ -63,18 +67,21 @@ def parse_address(address: str) -> dict | None:
     #         'Accept-Encoding': 'gzip, deflate, br',
     #     }
     # })
+    browser.get('https://ident.me')
+    print(browser.page_source)
+
     browser.get('https://dexcheck.ai/app/wallet-analyzer/' + address)
     print(browser.title)
 
     try:
-        WebDriverWait(browser, 30).until(
-            lambda some: browser.execute_script("return document.readyState") == "complete"
-        )
+        # WebDriverWait(browser, 30).until(
+        #     lambda some: browser.execute_script("return document.readyState") == "complete"
+        # )
         WebDriverWait(browser, 30).until(
             ec.presence_of_element_located((By.XPATH, '//*[@id="layout-scroll"]/div[2]/div[1]/div[2]/div/div[1]/p'))
         )
 
-        time.sleep(random.uniform(3, 6))
+        # time.sleep(random.uniform(3, 6))
 
         html = browser.page_source
         soup = BeautifulSoup(html, "html.parser")

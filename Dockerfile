@@ -6,7 +6,6 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
-    chromium-driver \
     libnss3 \
     libgconf-2-4 \
     xvfb \

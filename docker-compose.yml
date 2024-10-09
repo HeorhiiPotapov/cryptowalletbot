@@ -12,7 +12,7 @@ services:
       - webnet
 
   chrome:
-    image: seleniarm/standalone-chromium:latest
+    image: seleniarm/standalone-chromium:114.0
     networks:
       - webnet
 #    shm_size: 'gb'
